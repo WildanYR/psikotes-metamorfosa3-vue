@@ -20,6 +20,14 @@ const variantClass = computed(() => {
       className =
         'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring focus:ring-blue-300 transition-colors disabled:bg-blue-200 disabled:text-blue-600'
       break
+    case 'red-outline':
+      className =
+        'bg-red-50 border border-red-400 text-red-900 hover:bg-red-200 active:bg-red-300 focus:outline-none focus:ring focus:ring-red-300 transition-colors disabled:bg-gray-200 disabled:text-gray-600'
+      break
+    case 'black':
+      className =
+        'bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring focus:ring-gray-300 transition-colors disabled:bg-gray-200 disabled:text-gray-800'
+      break
     default:
       className = ''
       break
@@ -34,7 +42,7 @@ const spinnerClass = computed(() => {
       className = 'text-blue-800 fill-blue-400'
       break
     default:
-      className = ''
+      className = 'fill-gray-200 text-white'
       break
   }
   return className
