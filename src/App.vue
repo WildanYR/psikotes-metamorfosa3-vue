@@ -8,7 +8,7 @@ import {
 } from '@heroicons/vue/outline'
 </script>
 <template>
-  <router-view></router-view>
+  <router-view class="text-gray-800"></router-view>
   <notifications position="top center">
     <template #body="props">
       <div

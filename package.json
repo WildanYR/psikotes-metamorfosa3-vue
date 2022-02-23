@@ -17,6 +17,7 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.2",
     "@vitejs/plugin-vue": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "eslint": "^8.8.0",

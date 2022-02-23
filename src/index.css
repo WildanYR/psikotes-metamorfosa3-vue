@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .psi-editor {
+    @apply prose text-justify;
+  }
+}
 body {
   font-family: 'Nunito', 'Roboto', sans-serif;
 }

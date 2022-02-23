@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex min-h-screen w-screen flex-col items-center justify-center bg-gray-100 px-4 md:px-0"
+    class="flex min-h-screen flex-col items-center justify-center bg-gray-100 px-4 md:px-0"
   >
     <img
       src="../assets/logo.png"
