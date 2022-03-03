@@ -6,7 +6,42 @@
 
 @layer components {
   .psi-editor {
-    @apply prose text-justify;
+    @apply prose;
+  }
+  .psi-editor-input {
+    @apply mx-0 w-full min-w-full p-5 outline-none;
+  }
+  .psi-editor table {
+    @apply m-0 w-full table-fixed border-collapse overflow-hidden;
+  }
+  .psi-editor table tr {
+    @apply border-0 border-none;
+  }
+  .psi-editor table td,
+  .psi-editor table th {
+    @apply relative box-border border border-blue-300 px-2 py-1 align-top;
+  }
+  .psi-editor table td > *,
+  .psi-editor table th > * {
+    @apply m-0;
+  }
+  .psi-editor table td:first-child {
+    @apply px-2;
+  }
+  .psi-editor table th {
+    @apply bg-blue-100 text-left font-bold;
+  }
+  .psi-editor table .selectedCell {
+    @apply bg-blue-200;
+  }
+  .psi-editor table .column-resize-handle {
+    @apply pointer-events-none absolute -right-0.5 -bottom-0.5 top-0 w-1 bg-blue-400;
+  }
+  .tableWrapper {
+    @apply overflow-x-auto;
+  }
+  .resize-cursor {
+    @apply cursor-ew-resize;
   }
 }
 body {

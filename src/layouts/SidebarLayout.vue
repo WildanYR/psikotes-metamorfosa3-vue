@@ -9,16 +9,20 @@ const route = useRoute()
 const showSidebar = ref(false)
 
 const navs = computed(() => {
-  return route.meta.navs.map((item) => ({
-    ...item,
-    active: item.name === route.matched[1].name
-  }))
+  return route.meta.navs
+    .filter((item) => !item.hidden)
+    .map((item) => ({
+      ...item,
+      active: item.name === route.matched[1].name
+    }))
 })
+const activeNav = computed(() =>
+  route.meta.navs.find((item) => item.name === route.matched[1].name)
+)
 onMounted(() => {
   if (window.screen.width >= 768) {
     showSidebar.value = true
   }
-  console.log(route.matched)
 })
 </script>
 
@@ -32,7 +36,10 @@ onMounted(() => {
     />
     <!-- Content -->
     <div :class="['flex flex-1 flex-col gap-6 p-4', showSidebar && 'md:ml-64']">
-      <psi-navbar @menu-click="showSidebar = !showSidebar"></psi-navbar>
+      <psi-navbar
+        :page="activeNav.label"
+        @menu-click="showSidebar = !showSidebar"
+      ></psi-navbar>
       <router-view></router-view>
     </div>
   </div>

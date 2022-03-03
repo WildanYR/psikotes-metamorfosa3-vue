@@ -73,7 +73,7 @@ const props = defineProps({
               <DialogTitle
                 as="h3"
                 :class="[
-                  'text-lg font-medium leading-6 text-gray-900',
+                  'text-xl font-bold leading-6 text-gray-900',
                   props.hideTitle && 'sr-only'
                 ]"
               >

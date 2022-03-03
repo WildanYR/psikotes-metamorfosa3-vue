@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import PsikotesAngka from '../components/PsikotesAngka.vue'
+</script>
 <template>
-  <div></div>
+  <PsikotesAngka />
 </template>

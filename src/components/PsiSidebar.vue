@@ -1,9 +1,5 @@
 <script setup>
-import {
-  ChevronDoubleLeftIcon,
-  HomeIcon,
-  CogIcon
-} from '@heroicons/vue/outline'
+import { ChevronDoubleLeftIcon } from '@heroicons/vue/outline'
 const emit = defineEmits(['close'])
 const props = defineProps({
   isOpen: {
@@ -14,6 +10,7 @@ const props = defineProps({
     type: Array
   }
 })
+const appVersion = __APP_VERSION
 </script>
 
 <template>
@@ -28,13 +25,13 @@ const props = defineProps({
     <div
       v-show="props.isOpen"
       aria-hidden="true"
-      class="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+      class="fixed inset-0 z-10 bg-black bg-opacity-50 md:hidden"
       @click="emit('close')"
     ></div>
   </Transition>
   <aside
     :class="[
-      'fixed inset-y-0 z-40 h-screen flex-shrink-0 transform transition-transform',
+      'fixed inset-y-0 z-10 h-screen flex-shrink-0 transform transition-transform',
       props.isOpen ? 'translate-x-0' : '-translate-x-full'
     ]"
   >
@@ -73,6 +70,7 @@ const props = defineProps({
           <ChevronDoubleLeftIcon class="mx-auto h-5 w-5" />
         </button>
       </div>
+      <p class="my-2 text-center text-sm text-gray-500">v{{ appVersion }}</p>
     </div>
   </aside>
 </template>

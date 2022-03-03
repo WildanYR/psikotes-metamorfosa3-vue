@@ -6,6 +6,12 @@ import PsiModal from './PsiModal.vue'
 import PsiButton from './PsiButton.vue'
 
 const emit = defineEmits(['menuClick'])
+const props = defineProps({
+  page: {
+    type: String,
+    default: ''
+  }
+})
 const showModal = ref(false)
 </script>
 
@@ -20,7 +26,9 @@ const showModal = ref(false)
       >
         <menu-icon class="h-4 w-4" />
       </button>
-      <p class="hidden text-lg font-medium text-gray-600 md:block">Dashboard</p>
+      <p class="hidden text-lg font-medium text-gray-600 md:block">
+        {{ props.page }}
+      </p>
     </div>
     <img
       src="../assets/logo.png"

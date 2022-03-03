@@ -173,6 +173,12 @@ const dummySoals = ref([
               v-model="soal.jawaban"
               :opsi="soal.opsi"
             />
+            <div
+              v-else-if="soal.tipe_soal === 'membaca'"
+              class="text-center text-gray-500"
+            >
+              Soal ini tidak perlu dijawab
+            </div>
             <div v-else class="text-center text-gray-500">
               Jenis soal tidak terdaftar, silahkan hubungi admin
             </div>

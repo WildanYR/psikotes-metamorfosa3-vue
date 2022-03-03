@@ -5,6 +5,7 @@ import PsikotesLayout from '../layouts/PsikotesLayout.vue'
 import TestingComponent from '../views/TestingComponent.vue'
 import authRoute from './auth.route'
 import pesertaRoute from './peserta.route'
+import adminRoute from './admin.route'
 import psikotesRoute from './psikotes.route'
 
 const routes = [
@@ -22,6 +23,18 @@ const routes = [
     }),
     meta: {
       navs: pesertaRoute.map((item) => ({ ...item.nav, name: item.name }))
+    }
+  },
+  {
+    name: 'AdminLayout',
+    path: '/admin',
+    component: SidebarLayout,
+    children: adminRoute.map((item) => {
+      const { nav, ...route } = item
+      return route
+    }),
+    meta: {
+      navs: adminRoute.map((item) => ({ ...item.nav, name: item.name }))
     }
   },
   {
