@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import FormErrorMessage from './FormErrorMessage.vue'
 import FormInputLabel from './FormInputLabel.vue'
+import { EyeIcon, EyeOffIcon } from '@heroicons/vue/outline'
 
 const props = defineProps({
   label: {
@@ -17,16 +18,34 @@ const props = defineProps({
   },
   errorMessage: {
     type: Array
+  },
+  required: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits(['update:modelValue'])
 const metaValue = ref('')
+const showPassword = ref(false)
+const inputType = computed(() => {
+  if (props.type === 'password') {
+    return showPassword.value ? 'text' : 'password'
+  }
+  return props.type
+})
 
 const mutateValue = (e) => {
   metaValue.value = e.target.value
   emit('update:modelValue', e.target.value)
 }
+
+const invalid = computed(() => {
+  if (props.errorMessage?.length) {
+    return true
+  }
+  return false
+})
 
 onMounted(() => {
   metaValue.value = props.modelValue || ''
@@ -37,16 +56,26 @@ onMounted(() => {
   <div>
     <label class="relative">
       <input
-        :type="props.type"
+        :type="inputType"
         :modelValue="props.modelValue"
-        class="peer w-full rounded-md border-2 border-gray-200 px-3 py-2 transition-colors focus:border-blue-500 focus:outline-none"
-        required
+        :class="[
+          'peer w-full rounded-md border-2 px-3 py-2 transition-colors focus:border-blue-500 focus:outline-none',
+          invalid ? 'border-red-300' : 'border-gray-200'
+        ]"
+        :required="props.required"
         @input="mutateValue"
       />
       <form-input-label :label="props.label" :active="!!metaValue" />
+      <button
+        v-if="props.type === 'password'"
+        class="absolute right-2 top-0 block text-gray-400 transition-colors hover:text-blue-500"
+        @click.prevent="showPassword = !showPassword"
+      >
+        <component :is="showPassword ? EyeOffIcon : EyeIcon" class="h-6 w-6" />
+      </button>
     </label>
-    <div v-if="errorMessage" class="ml-1 mt-1 space-y-1">
-      <form-error-message :label="props.label" :messages="errorMessage" />
+    <div v-if="invalid" class="ml-1 mt-1 space-y-1">
+      <form-error-message :label="props.label" :messages="props.errorMessage" />
     </div>
   </div>
 </template>

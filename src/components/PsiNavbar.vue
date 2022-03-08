@@ -5,11 +5,18 @@ import { ref } from 'vue'
 import PsiModal from './PsiModal.vue'
 import PsiButton from './PsiButton.vue'
 
-const emit = defineEmits(['menuClick'])
+const emit = defineEmits(['menuClick', 'onLogout'])
 const props = defineProps({
   page: {
     type: String,
     default: ''
+  },
+  email: {
+    type: String
+  },
+  logoutLoading: {
+    type: Boolean,
+    default: false
   }
 })
 const showModal = ref(false)
@@ -43,17 +50,20 @@ const showModal = ref(false)
     </button>
     <div class="hidden items-center justify-between gap-8 md:flex">
       <div class="flex items-center justify-center gap-2">
-        <p class="text-sm font-medium">pesertatesting@gmail.com</p>
+        <p class="text-sm font-medium">{{ props.email }}</p>
         <div class="rounded-full bg-pink-100 p-2 text-pink-700">
           <user-icon-solid class="h-4 w-4" />
         </div>
       </div>
-      <button
-        class="rounded-md bg-red-50 px-2 py-1 text-sm text-red-700 hover:bg-red-100 focus:outline-none focus:ring focus:ring-red-300 active:bg-red-600 active:text-white"
+      <psi-button
+        variant="red-outline"
+        size="sm"
+        :loading="props.logoutLoading"
+        @click="emit('onLogout')"
       >
         keluar
         <logout-icon class="inline h-4 w-4" />
-      </button>
+      </psi-button>
     </div>
   </div>
   <psi-modal

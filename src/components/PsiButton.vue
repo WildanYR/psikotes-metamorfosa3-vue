@@ -10,6 +10,10 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'primary'
+  },
+  size: {
+    type: String,
+    default: 'md'
   }
 })
 
@@ -43,6 +47,22 @@ const variantClass = computed(() => {
   return className
 })
 
+const sizeClass = computed(() => {
+  let className = ''
+  switch (props.size) {
+    case 'sm':
+      className = 'px-2 py-1 text-sm'
+      break
+    case 'md':
+      className = 'px-4 py-2'
+      break
+    default:
+      className = 'fill-gray-200 text-white'
+      break
+  }
+  return className
+})
+
 const spinnerClass = computed(() => {
   let className = ''
   switch (props.variant) {
@@ -60,7 +80,7 @@ const spinnerClass = computed(() => {
 <template>
   <button
     :disabled="props.loading"
-    :class="['rounded-md px-4 py-2 tracking-wide', variantClass]"
+    :class="['rounded-md tracking-wide', variantClass, sizeClass]"
   >
     <loading-spinner
       v-if="props.loading"

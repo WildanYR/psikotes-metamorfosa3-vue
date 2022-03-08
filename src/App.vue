@@ -1,4 +1,5 @@
 <script setup>
+import { useLoadingStore } from './stores/loading'
 import {
   XIcon,
   EmojiHappyIcon,
@@ -6,9 +7,13 @@ import {
   ExclamationCircleIcon,
   InformationCircleIcon
 } from '@heroicons/vue/outline'
+import FullscreenLoading from './components/FullscreenLoading.vue'
+
+const loadingStore = useLoadingStore()
 </script>
 <template>
-  <router-view class="text-gray-800"></router-view>
+  <fullscreen-loading v-if="loadingStore.global" />
+  <router-view v-else class="text-gray-800"></router-view>
   <notifications position="top center">
     <template #body="props">
       <div
