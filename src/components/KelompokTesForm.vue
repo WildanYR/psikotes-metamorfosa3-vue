@@ -14,6 +14,15 @@ const props = defineProps({
   petunjuk: {
     type: String,
     default: ''
+  },
+  errorNama: {
+    type: Array
+  },
+  errorWaktu: {
+    type: Array
+  },
+  errorPetunjuk: {
+    type: Array
   }
 })
 const emit = defineEmits(['update:nama', 'update:waktu', 'update:petunjuk'])
@@ -24,18 +33,21 @@ const emit = defineEmits(['update:nama', 'update:waktu', 'update:petunjuk'])
     <form-input
       label="Nama"
       :model-value="props.nama"
+      :error-message="props.errorNama"
       @update:model-value="(e) => emit('update:nama', e)"
     />
     <form-input
       label="Waktu"
       type="number"
       :model-value="props.waktu"
+      :error-message="props.errorWaktu"
       @update:model-value="(e) => emit('update:waktu', e)"
     />
     <psi-editor
       label="Petunjuk"
-      :model-value="props.waktu"
-      @update:model-value="(e) => emit('update:waktu', e)"
+      :model-value="props.petunjuk"
+      :error-message="props.errorPetunjuk"
+      @update:model-value="(e) => emit('update:petunjuk', e)"
     />
   </div>
 </template>

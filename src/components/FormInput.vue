@@ -14,7 +14,8 @@ const props = defineProps({
     default: 'text'
   },
   modelValue: {
-    type: String
+    type: String,
+    required: true
   },
   errorMessage: {
     type: Array
@@ -26,7 +27,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
-const metaValue = ref('')
 const showPassword = ref(false)
 const inputType = computed(() => {
   if (props.type === 'password') {
@@ -36,7 +36,6 @@ const inputType = computed(() => {
 })
 
 const mutateValue = (e) => {
-  metaValue.value = e.target.value
   emit('update:modelValue', e.target.value)
 }
 
@@ -46,10 +45,6 @@ const invalid = computed(() => {
   }
   return false
 })
-
-onMounted(() => {
-  metaValue.value = props.modelValue || ''
-})
 </script>
 
 <template>
@@ -57,7 +52,7 @@ onMounted(() => {
     <label class="relative">
       <input
         :type="inputType"
-        :modelValue="props.modelValue"
+        :value="props.modelValue"
         :class="[
           'peer w-full rounded-md border-2 px-3 py-2 transition-colors focus:border-blue-500 focus:outline-none',
           invalid ? 'border-red-300' : 'border-gray-200'
@@ -65,7 +60,7 @@ onMounted(() => {
         :required="props.required"
         @input="mutateValue"
       />
-      <form-input-label :label="props.label" :active="!!metaValue" />
+      <form-input-label :label="props.label" :active="!!props.modelValue" />
       <button
         v-if="props.type === 'password'"
         class="absolute right-2 top-0 block text-gray-400 transition-colors hover:text-blue-500"

@@ -1,8 +1,13 @@
 import { notify } from '@kyvg/vue3-notification'
+import router from '../router'
 
 export const errorHandler = (error) => {
   if (error.response) {
     console.error(error.response.data)
+    if (error.response.status === 401) {
+      localStorage.removeItem('token')
+      router.push({ name: 'login' })
+    }
     notify({
       title: 'Error',
       text: error.response.data.message,

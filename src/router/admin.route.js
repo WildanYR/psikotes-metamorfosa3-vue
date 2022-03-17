@@ -35,7 +35,7 @@ export default [
   },
   {
     name: 'alat_tes_edit_admin',
-    path: 'alat-tes/edit/:id',
+    path: 'alat-tes/:id',
     component: AlatTesEditAdmin,
     nav: {
       hidden: true,
@@ -44,7 +44,7 @@ export default [
   },
   {
     name: 'kelompok_tes_add_admin',
-    path: 'kelompok-tes',
+    path: 'alat-tes/:alatTesId/kelompok-tes',
     component: KelompokTesAdmin,
     meta: {
       mode: 'add'
@@ -56,7 +56,7 @@ export default [
   },
   {
     name: 'kelompok_tes_edit_admin',
-    path: 'kelompok-tes/edit/:id',
+    path: 'alat-tes/:alatTesId/kelompok-tes/:id',
     component: KelompokTesAdmin,
     meta: {
       mode: 'edit'
@@ -68,7 +68,7 @@ export default [
   },
   {
     name: 'kelompok_tes_soal_admin',
-    path: 'kelompok-tes/soal/:id',
+    path: 'alat-tes/:alatTesId/kelompok-tes/:id/soal',
     component: SoalAdmin,
     nav: {
       hidden: true,

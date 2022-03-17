@@ -1,6 +1,6 @@
 <script setup>
 import { useEditor, EditorContent } from '@tiptap/vue-3'
-import { onMounted, ref } from 'vue'
+import { computed, watch, ref } from 'vue'
 import BlockQuote from '@tiptap/extension-blockquote'
 import BulletList from '@tiptap/extension-bullet-list'
 import OrderedList from '@tiptap/extension-ordered-list'
@@ -39,7 +39,8 @@ import OrderedListIcon from './editor/list/OrderedListIcon.vue'
 import UnorderedListIcon from './editor/list/UnorderedListIcon.vue'
 import ImageIcon from './editor/ImageIcon.vue'
 import TableIcon from './editor/TableIcon.vue'
-const cdn_url = 'abc'
+import config from '../config'
+import ModalImage from './ModalImage.vue'
 
 const PsiImageExtension = Image.extend({
   name: 'psi-image',
@@ -49,9 +50,7 @@ const PsiImageExtension = Image.extend({
       size: {
         default: '100%',
         parseHTML: (element) => {
-          return {
-            size: element.getAttribute('data-size')
-          }
+          return element.getAttribute('data-size')
         },
         // … and customize the HTML rendering.
         renderHTML: (attributes) => {
@@ -119,16 +118,20 @@ const props = defineProps({
     required: true
   },
   modelValue: {
-    type: String
+    type: String,
+    required: true
   },
   errorMessage: {
     type: Array
   }
 })
 const emit = defineEmits(['update:modelValue'])
-const metaValue = ref('')
+const showImageModal = ref(false)
+const editorValue = computed(() =>
+  props.modelValue.replace(/==cdn_url==/g, config.cdnUrl)
+)
 const editor = useEditor({
-  content: metaValue.value.replace(/==cdn_url==/g, cdn_url),
+  content: editorValue.value,
   editorProps: {
     attributes: {
       class: 'psi-editor psi-editor-input'
@@ -165,15 +168,23 @@ const editor = useEditor({
   onUpdate: ({ editor }) => {
     const modified_value = editor
       .getHTML()
-      .replace(new RegExp(cdn_url, 'g'), '==cdn_url==')
-    metaValue.value = modified_value
+      .replace(new RegExp(config.cdnUrl, 'g'), '==cdn_url==')
     emit('update:modelValue', modified_value)
   }
 })
-
-onMounted(() => {
-  if (props.modelValue) {
-    metaValue.value = props.modelValue
+const openImageModal = () => {
+  showImageModal.value = true
+}
+const closeImageModal = () => {
+  showImageModal.value = false
+}
+const handleImageSelected = (image) => {
+  editor.value.chain().setImage({ src: image }).run()
+  closeImageModal()
+}
+watch(editorValue, () => {
+  if (editor.value && editorValue.value !== editor.value.getHTML()) {
+    editor.value.commands.setContent(editorValue.value, true)
   }
 })
 </script>
@@ -365,7 +376,7 @@ onMounted(() => {
           <!-- image -->
           <button
             class="flex-none rounded bg-gray-200 p-2 transition-colors hover:bg-gray-300"
-            @click="imgDialogOpen = true"
+            @click="openImageModal"
           >
             <image-icon class="h-4 w-4" />
           </button>
@@ -502,5 +513,10 @@ onMounted(() => {
       </div>
       <editor-content :editor="editor" />
     </div>
+    <modal-image
+      :show-modal="showImageModal"
+      @close-modal="closeImageModal"
+      @image-selected="handleImageSelected"
+    />
   </div>
 </template>

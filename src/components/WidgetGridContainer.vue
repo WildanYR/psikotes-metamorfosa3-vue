@@ -1,5 +1,7 @@
 <script setup>
 import { ZoomOutIcon } from '@heroicons/vue/outline'
+import LoadingSpinner from './LoadingSpinner.vue'
+import EmptyData from './EmptyData.vue'
 const props = defineProps({
   title: {
     type: String,
@@ -7,6 +9,10 @@ const props = defineProps({
   },
   description: {
     type: String
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 </script>
@@ -22,16 +28,17 @@ const props = defineProps({
       </div>
       <slot name="cta"></slot>
     </div>
+    <div v-if="props.loading" class="flex items-center justify-center">
+      <loading-spinner
+        class="h-16 w-16 animate-spin fill-blue-100 text-blue-600"
+      />
+    </div>
     <div
+      v-else
       class="grid grid-cols-1 place-items-center gap-6 md:grid-cols-2 xl:grid-cols-4"
     >
       <slot>
-        <div
-          class="col-span-full flex flex-col items-center justify-center gap-5"
-        >
-          <zoom-out-icon class="h-24 w-24 text-gray-300" />
-          <h3 class="text-2xl text-gray-600">Tidak Ada Data</h3>
-        </div>
+        <empty-data class="col-span-full" />
       </slot>
     </div>
   </div>

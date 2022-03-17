@@ -1,4 +1,5 @@
 <script setup>
+import LoadingSpinner from './LoadingSpinner.vue'
 const props = defineProps({
   title: {
     type: String,
@@ -6,6 +7,10 @@ const props = defineProps({
   },
   description: {
     type: String
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 </script>
@@ -21,6 +26,11 @@ const props = defineProps({
       </div>
       <slot name="cta"></slot>
     </div>
-    <slot></slot>
+    <div v-if="props.loading" class="flex items-center justify-center">
+      <loading-spinner
+        class="h-16 w-16 animate-spin fill-blue-100 text-blue-600"
+      />
+    </div>
+    <slot v-else></slot>
   </div>
 </template>

@@ -13,7 +13,7 @@ const loadingStore = useLoadingStore()
 </script>
 <template>
   <fullscreen-loading v-if="loadingStore.global" />
-  <router-view v-else class="text-gray-800"></router-view>
+  <router-view v-else class="scroll-smooth text-gray-800"></router-view>
   <notifications position="top center">
     <template #body="props">
       <div

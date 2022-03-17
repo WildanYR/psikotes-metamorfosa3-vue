@@ -1,3 +1,5 @@
+const appUrl = 'http://psikotes-metamorfosa.test'
 export default {
-  apiUrl: 'http://psikotes-metamorfosa.test'
+  apiUrl: appUrl,
+  cdnUrl: `${appUrl}/images/`
 }
