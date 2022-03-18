@@ -70,3 +70,18 @@ export const deleteAlatTes = async (id) => {
     throw errorHandler(error)
   }
 }
+
+export const setAlatTesAktif = async (id, aktif) => {
+  try {
+    const response = await axios.put(
+      `${config.apiUrl}/api/alat-tes/${id}`,
+      { aktif },
+      {
+        headers: { ...generateTokenHeader() }
+      }
+    )
+    return response.data
+  } catch (error) {
+    throw errorHandler(error)
+  }
+}
