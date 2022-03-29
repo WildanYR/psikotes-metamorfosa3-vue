@@ -1,6 +1,8 @@
 <script setup>
 import { RadioGroup, RadioGroupOption, RadioGroupLabel } from '@headlessui/vue'
 import { CheckCircleIcon } from '@heroicons/vue/solid'
+import config from '../config'
+
 const props = defineProps({
   opsi: {
     type: Array,
@@ -59,7 +61,8 @@ const emit = defineEmits(['update:modelValue'])
               <div class="flex items-center">
                 <div class="text-sm">
                   <RadioGroupLabel as="template">
-                    <div v-html="ops.text"></div>
+                    <p v-if="ops.type === 'text'">{{ ops.teks }}</p>
+                    <img v-else :src="config.cdnUrl + ops.teks" class="w-44" />
                   </RadioGroupLabel>
                 </div>
               </div>

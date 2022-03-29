@@ -30,7 +30,7 @@ export const detailAlatTes = async (id) => {
   }
 }
 
-export const addAlatTes = async (nama, aktif = true) => {
+export const addAlatTes = async (nama, aktif = false) => {
   try {
     const response = await axios.post(
       `${config.apiUrl}/api/alat-tes`,

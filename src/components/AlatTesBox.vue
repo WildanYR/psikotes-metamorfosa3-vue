@@ -42,7 +42,9 @@ const props = defineProps({
       ]"
     />
     <p class="text-xl font-bold text-gray-800">{{ props.title }}</p>
-    <p class="mb-5 text-sm text-gray-400">{{ props.subtitle }}</p>
+    <p v-show="props.subtitle" class="mb-5 text-sm text-gray-400">
+      {{ props.subtitle }}
+    </p>
     <slot></slot>
     <div
       :class="[

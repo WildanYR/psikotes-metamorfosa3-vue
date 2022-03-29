@@ -3,8 +3,7 @@ import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   modelValue: {
-    type: Array,
-    default: () => []
+    type: String,
   }
 })
 const emit = defineEmits(['update:modelValue'])
@@ -20,12 +19,12 @@ const updateSelected = (value) => {
     metaValue.value.push(value)
     metaValue.value = metaValue.value.sort((a, b) => a - b)
   }
-  emit('update:modelValue', metaValue.value)
+  emit('update:modelValue', metaValue.value.join(''))
 }
 
 onMounted(() => {
-  if (props.modelValue && props.modelValue.length > 0) {
-    metaValue.value = [...props.modelValue]
+  if (props.modelValue) {
+    metaValue.value = props.modelValue.split('')
   }
 })
 </script>

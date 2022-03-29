@@ -14,11 +14,11 @@ const props = defineProps({
   },
   jumlahSoal: {
     type: Number,
-    default: 100
+    required: true
   },
   soalDikerjakan: {
     type: Number,
-    default: 50
+    required: true
   }
 })
 

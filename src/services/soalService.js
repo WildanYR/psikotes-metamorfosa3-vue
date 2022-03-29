@@ -12,7 +12,7 @@ export const getKelompokTesSoal = async (id) => {
     )
     const signedSoal = response.data.apiData.map((soal) => {
       const signature = hashObject(soal)
-      let opsi_soal = soal.jenis_soal === 'kelompok' ? soal.opsi_soal : {}
+      let opsi_soal = soal.jenis_soal === 'kelompok' ? soal.opsi_soal : null
       if (soal.jenis_soal !== 'kelompok' && soal.opsi_soal) {
         // A;-;image;-;image_name;=;
         opsi_soal = soal.opsi_soal.split(';=;').map((op) => {

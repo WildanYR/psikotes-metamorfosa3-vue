@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { CheckCircleIcon } from '@heroicons/vue/solid'
+import config from '../config'
 
 const props = defineProps({
   modelValue: {
@@ -70,7 +71,8 @@ onMounted(() => {
       >
         <div class="flex items-center">
           <div class="text-sm">
-            <div v-html="ops.text"></div>
+            <p v-if="ops.type === 'text'">{{ ops.teks }}</p>
+            <img v-else :src="config.cdnUrl + ops.teks" class="w-44" />
           </div>
         </div>
         <div v-show="metaValue.includes(ops.value)" class="text-blue-700">
