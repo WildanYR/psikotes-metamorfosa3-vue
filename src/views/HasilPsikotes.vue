@@ -1,68 +1,130 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import WidgetContainer from '../components/WidgetContainer.vue'
 import PsiAutocomplete from '../components/PsiAutocomplete.vue'
 import PsiButton from '../components/PsiButton.vue'
+import { getAlatTes } from '../services/alatTesService'
+import { getSesi } from '../services/sesiService'
+import {
+  getUserPsikotes,
+  getJawabanUserPsikotes
+} from '../services/psikotesService'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 
-const daftarSesi = ref([
-  { text: 'Desember 2021', value: '1' },
-  { text: 'Januari 2022', value: '2' },
-  { text: 'Februari 2022', value: '3' },
-  { text: 'Maret 2022', value: '4' },
-  { text: 'April 2022', value: '5' }
-])
-const daftarAlatTes = ref([
-  { text: 'Alat Tes 1', value: '1' },
-  { text: 'Alat Tes 2', value: '2' },
-  { text: 'Alat Tes 3', value: '3' },
-  { text: 'Alat Tes 4', value: '4' },
-  { text: 'Alat Tes 5', value: '5' }
-])
-const daftarUser = ref([
-  { text: 'User 1', value: '1' },
-  { text: 'User 2', value: '2' },
-  { text: 'User 3', value: '3' },
-  { text: 'User 4', value: '4' },
-  { text: 'User 5', value: '5' }
-])
+const dataAlatTes = ref([])
+const dataSesi = ref([])
+const dataUser = ref(null)
+const dataJawaban = ref([])
+const loadingGetAlatTesSesi = ref(false)
+const loadingGetUser = ref(false)
+const loadingGetJawaban = ref(false)
 const selectedSesi = ref(null)
 const selectedAlatTes = ref(null)
 const selectedUser = ref(null)
+
+const handleGetAlatTesSesi = () => {
+  loadingGetAlatTesSesi.value = true
+  getAlatTes(true)
+    .then((data) => {
+      dataAlatTes.value = data.map((item) => ({
+        text: item.nama,
+        value: item.id
+      }))
+      return getSesi()
+    })
+    .then((data) => {
+      dataSesi.value = data.map((item) => ({ text: item.nama, value: item.id }))
+    })
+    .finally(() => {
+      loadingGetAlatTesSesi.value = false
+    })
+}
+
+const handleGetUser = () => {
+  if (selectedAlatTes.value && selectedSesi.value) {
+    loadingGetUser.value = true
+    getUserPsikotes(selectedSesi.value.value, selectedAlatTes.value.value)
+      .then((data) => {
+        dataUser.value = data.map((item) => ({
+          text: item.nama_lengkap,
+          value: item.id
+        }))
+      })
+      .finally(() => {
+        loadingGetUser.value = false
+      })
+  }
+}
+
+const handleGetJawaban = () => {
+  loadingGetJawaban.value = true
+  getJawabanUserPsikotes(
+    selectedSesi.value.value,
+    selectedAlatTes.value.value,
+    selectedUser.value.value
+  )
+    .then((data) => {
+      dataJawaban.value = data
+    })
+    .finally(() => {
+      loadingGetJawaban.value = false
+    })
+}
+
+onMounted(() => {
+  handleGetAlatTesSesi()
+})
 </script>
 
 <template>
-  <widget-container title="Pilih Sesi dan Alat Tes">
+  <widget-container
+    title="Pilih Sesi dan Alat Tes"
+    :loading="loadingGetAlatTesSesi || loadingGetUser"
+  >
     <div class="flex items-center gap-3">
       <psi-autocomplete
         v-model="selectedSesi"
-        :items="daftarSesi"
+        :items="dataSesi"
         label="Sesi"
         class="flex-1"
+        @update:model-value="handleGetUser()"
       />
       <psi-autocomplete
         v-model="selectedAlatTes"
-        :items="daftarAlatTes"
+        :items="dataAlatTes"
         label="Alat tes"
         class="flex-1"
+        @update:model-value="handleGetUser()"
       />
     </div>
-    <p
-      v-if="!selectedSesi || !selectedAlatTes"
-      class="mt-5 text-center text-red-700"
-    >
-      Pilih Sesi dan Alat Tes
+    <p v-if="!dataUser?.length" class="mt-5 text-center text-red-700">
+      {{
+        dataUser
+          ? 'Belum ada peserta yang mengerjakan'
+          : 'Pilih Sesi dan Alat Tes'
+      }}
     </p>
     <psi-autocomplete
       v-else
       v-model="selectedUser"
-      :items="daftarUser"
+      :items="dataUser"
       label="User"
       class="mt-5 w-full"
+      @update:model-value="handleGetJawaban()"
     />
   </widget-container>
-  <template v-if="!!selectedUser">
+  <div v-if="loadingGetJawaban" class="flex items-center justify-center">
+    <loading-spinner
+      class="h-16 w-16 animate-spin fill-blue-100 text-blue-600"
+    />
+  </div>
+  <template v-else-if="dataJawaban.length">
     <h2 class="text-center text-4xl font-bold">Jawaban Peserta</h2>
-    <widget-container title="Kelompok Tes 1">
+    <widget-container
+      v-for="(kelompokTes, i) in dataJawaban"
+      :key="'kelompok-tes-' + i"
+      :title="kelompokTes.nama"
+    >
       <template #cta>
         <psi-button>Copy Jawaban</psi-button>
       </template>
@@ -73,55 +135,21 @@ const selectedUser = ref(null)
             style="font-size: 0.9674rem"
           >
             <th class="bg-gray-200 px-4 py-2" style="background-color: #f8f8f8">
-              Nomor
+              {{ kelompokTes.jenis_soal_kelompok ? 'Kelompok' : 'Nomor' }}
             </th>
-            <th class="px-4 py-2" style="background-color: #f8f8f8">Jawaban</th>
+            <th class="px-4 py-2" style="background-color: #f8f8f8">
+              {{ kelompokTes.jenis_soal_kelompok ? 'Jumlah' : 'Jawaban' }}
+            </th>
           </tr>
         </thead>
         <tbody class="text-sm font-normal text-gray-700">
-          <tr class="border-b border-gray-200 py-10 hover:bg-gray-100">
-            <td class="px-4 py-4">1</td>
-            <td class="px-4 py-4">A</td>
-          </tr>
-          <tr class="border-b border-gray-200 py-4 hover:bg-gray-100">
-            <td class="px-4 py-4">2</td>
-            <td class="px-4 py-4">B</td>
-          </tr>
-          <tr class="border-gray-200 hover:bg-gray-100">
-            <td class="px-4 py-4">3</td>
-            <td class="px-4 py-4">C</td>
-          </tr>
-        </tbody>
-      </table>
-    </widget-container>
-    <widget-container title="Kelompok Tes 2">
-      <template #cta>
-        <psi-button>Copy Jawaban</psi-button>
-      </template>
-      <table class="w-full table-auto border-collapse">
-        <thead>
           <tr
-            class="rounded-lg text-left text-sm font-medium text-gray-700"
-            style="font-size: 0.9674rem"
+            v-for="(soal, j) in kelompokTes.soal"
+            :key="'soal-' + j"
+            class="border-b border-gray-200 py-10 hover:bg-gray-100"
           >
-            <th class="bg-gray-200 px-4 py-2" style="background-color: #f8f8f8">
-              Kelompok
-            </th>
-            <th class="px-4 py-2" style="background-color: #f8f8f8">Jumlah</th>
-          </tr>
-        </thead>
-        <tbody class="text-sm font-normal text-gray-700">
-          <tr class="border-b border-gray-200 py-10 hover:bg-gray-100">
-            <td class="px-4 py-4">Singa</td>
-            <td class="px-4 py-4">10</td>
-          </tr>
-          <tr class="border-b border-gray-200 py-4 hover:bg-gray-100">
-            <td class="px-4 py-4">Kijang</td>
-            <td class="px-4 py-4">1</td>
-          </tr>
-          <tr class="border-gray-200 hover:bg-gray-100">
-            <td class="px-4 py-4">Elang</td>
-            <td class="px-4 py-4">5</td>
+            <td class="px-4 py-4">{{ soal.nomor }}</td>
+            <td class="px-4 py-4">{{ soal.jawaban }}</td>
           </tr>
         </tbody>
       </table>

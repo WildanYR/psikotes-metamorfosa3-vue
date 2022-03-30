@@ -29,7 +29,7 @@ onMounted(() => {
         'w-full rounded-lg p-3',
         metaValue === 'v' ? 'bg-blue-500 font-bold text-white' : 'bg-gray-200'
       ]"
-      @click="updateValue('v')"
+      @click="updateValue('Ya')"
     >
       Setuju
     </button>
@@ -38,7 +38,7 @@ onMounted(() => {
         'w-full rounded-lg p-3',
         metaValue === 'x' ? 'bg-blue-500 font-bold text-white' : 'bg-gray-200'
       ]"
-      @click="updateValue('x')"
+      @click="updateValue('Tidak')"
     >
       Tidak setuju
     </button>

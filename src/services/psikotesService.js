@@ -64,3 +64,79 @@ export const submitJawaban = async (alat_tes_id, jawaban) => {
     throw errorHandler(error)
   }
 }
+
+export const getUserPsikotes = async (sesi_id, alat_tes_id) => {
+  try {
+    const response = await axios.get(
+      `${config.apiUrl}/api/psikotes/user/${sesi_id}/${alat_tes_id}`,
+      {
+        headers: { ...generateTokenHeader() }
+      }
+    )
+    return response.data.apiData
+  } catch (error) {
+    throw errorHandler(error)
+  }
+}
+
+export const getJawabanUserPsikotes = async (sesi_id, alat_tes_id, user_id) => {
+  try {
+    const response = await axios.get(
+      `${config.apiUrl}/api/psikotes/user/${sesi_id}/${alat_tes_id}/${user_id}`,
+      {
+        headers: { ...generateTokenHeader() }
+      }
+    )
+    const kelompokTesData = response.data.apiData.kelompok_tes
+    const jawabanUser = response.data.apiData.jawaban
+      .split(';=;')
+      .map((jwb) => {
+        const [id, jawaban] = jwb.split(';-;')
+        return { id, jawaban }
+      })
+    let kelompokTes = []
+    for (const keltes of kelompokTesData) {
+      const jenis_soal_kelompok = keltes.soal[0].jenis_soal === 'kelompok'
+      const kelompokDetail = {
+        nama: keltes.nama,
+        soal: [],
+        jenis_soal_kelompok
+      }
+      if (jenis_soal_kelompok) {
+        let jenisSoalKelompok = []
+        for (const soal of keltes.soal) {
+          let jawabanKelompok = '-'
+          for (const jawaban of jawabanUser) {
+            if (soal.id === jawaban.id) {
+              jawabanKelompok = jawaban.jawaban
+            }
+          }
+          const kelompokIndex = jenisSoalKelompok.findIndex(
+            (item) => item.nomor === jawabanKelompok
+          )
+          if (kelompokIndex < 0) {
+            jenisSoalKelompok.push({ nomor: jawabanKelompok, jawaban: 1 })
+          } else {
+            const jumlah = jenisSoalKelompok[kelompokIndex].jawaban
+            jenisSoalKelompok[kelompokIndex].jawaban = jumlah + 1
+          }
+        }
+        kelompokDetail.soal = jenisSoalKelompok
+      } else {
+        for (const soal of keltes.soal) {
+          const soalDetail = { nomor: soal.nomor, jawaban: '' }
+          for (const jawaban of jawabanUser) {
+            if (soal.id === jawaban.id) {
+              soalDetail.jawaban = jawaban.jawaban
+            }
+          }
+          kelompokDetail.soal.push(soalDetail)
+        }
+      }
+      kelompokTes.push(kelompokDetail)
+    }
+    return kelompokTes
+  } catch (error) {
+    throw errorHandler(error)
+  }
+}
