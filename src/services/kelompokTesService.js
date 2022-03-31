@@ -19,12 +19,13 @@ export const addKelompokTes = async (
   alat_tes_id,
   nama,
   waktu = 0,
-  petunjuk = null
+  petunjuk = null,
+  sort_index = 0
 ) => {
   try {
     const response = await axios.post(
       `${config.apiUrl}/api/kelompok-tes`,
-      { nama, waktu, petunjuk, alat_tes_id },
+      { nama, waktu, petunjuk, alat_tes_id, sort_index },
       {
         headers: { ...generateTokenHeader() }
       }
@@ -35,11 +36,17 @@ export const addKelompokTes = async (
   }
 }
 
-export const updateKelompokTes = async (id, nama, waktu, petunjuk) => {
+export const updateKelompokTes = async (
+  id,
+  nama,
+  waktu,
+  petunjuk,
+  sort_index
+) => {
   try {
     const response = await axios.put(
       `${config.apiUrl}/api/kelompok-tes/${id}`,
-      { nama, waktu, petunjuk },
+      { nama, waktu, petunjuk, sort_index },
       {
         headers: { ...generateTokenHeader() }
       }

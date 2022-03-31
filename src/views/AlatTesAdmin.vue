@@ -26,7 +26,7 @@ const selectedAlatTes = reactive({
   id: '',
   nama: ''
 })
-const formAdd = reactive({ nama: '' })
+const formAdd = reactive({ nama: '', sort_index: '0' })
 const formAddValidation = reactive({
   nama: { invalid: false, errorMessage: [] }
 })
@@ -66,7 +66,7 @@ const handleAdd = () => {
     return
   }
   loadingAddAlatTes.value = true
-  addAlatTes(formAdd.nama)
+  addAlatTes(formAdd.nama, +formAdd.sort_index)
     .then((data) => {
       notify({
         title: 'Berhasil',
@@ -140,11 +140,18 @@ onMounted(() => {
     :show-modal="showAddModal"
     @close-modal="closeAddModal"
   >
-    <form-input
-      v-model="formAdd.nama"
-      label="Nama"
-      :error-message="formAddValidation.nama.errorMessage"
-    />
+    <div class="space-y-4">
+      <form-input
+        v-model="formAdd.nama"
+        label="Nama"
+        :error-message="formAddValidation.nama.errorMessage"
+      />
+      <form-input
+        v-model="formAdd.sort_index"
+        label="Sort Index"
+        type="number"
+      />
+    </div>
     <div class="mt-3 flex items-center justify-end gap-3">
       <psi-button variant="black" @click="closeAddModal">Batal</psi-button>
       <psi-button :loading="loadingAddAlatTes" @click="handleAdd"

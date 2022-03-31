@@ -11,6 +11,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  sortIndex: {
+    type: String,
+    default: '0'
+  },
   petunjuk: {
     type: String,
     default: ''
@@ -42,6 +46,12 @@ const emit = defineEmits(['update:nama', 'update:waktu', 'update:petunjuk'])
       :model-value="props.waktu"
       :error-message="props.errorWaktu"
       @update:model-value="(e) => emit('update:waktu', e)"
+    />
+    <form-input
+      label="Sort Index"
+      type="number"
+      :model-value="props.sortIndex"
+      @update:model-value="(e) => emit('update:sortIndex', e)"
     />
     <psi-editor
       label="Petunjuk"

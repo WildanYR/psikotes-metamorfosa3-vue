@@ -18,7 +18,8 @@ const loadingUpsert = ref(false)
 const formKelompokTes = reactive({
   nama: '',
   waktu: '0',
-  petunjuk: ''
+  petunjuk: '',
+  sort_index: '0'
 })
 const formKelompokTesValidation = reactive({
   nama: { invalid: false, errorMessage: [] },
@@ -43,6 +44,7 @@ const handleGetDetail = () => {
     .then((data) => {
       formKelompokTes.nama = data.nama
       formKelompokTes.waktu = data.waktu.toString()
+      formKelompokTes.sort_index = data.sort_index.toString()
       formKelompokTes.petunjuk = data.petunjuk
     })
     .finally(() => {
@@ -58,7 +60,8 @@ const handleAdd = () => {
     route.params.alatTesId,
     formKelompokTes.nama,
     formKelompokTes.waktu,
-    formKelompokTes.petunjuk
+    formKelompokTes.petunjuk,
+    formKelompokTes.sort_index
   )
     .then((data) => {
       notify({
@@ -81,7 +84,8 @@ const handleUpdate = () => {
     route.params.id,
     formKelompokTes.nama,
     formKelompokTes.waktu,
-    formKelompokTes.petunjuk
+    formKelompokTes.petunjuk,
+    formKelompokTes.sort_index
   )
     .then((data) => {
       notify({
@@ -119,6 +123,7 @@ onMounted(() => {
       v-model:nama="formKelompokTes.nama"
       v-model:waktu="formKelompokTes.waktu"
       v-model:petunjuk="formKelompokTes.petunjuk"
+      v-model:sort-index="formKelompokTes.sort_index"
       :error-nama="formKelompokTesValidation.nama.errorMessage"
       :error-waktu="formKelompokTesValidation.waktu.errorMessage"
       :error-petunjuk="formKelompokTesValidation.petunjuk.errorMessage"

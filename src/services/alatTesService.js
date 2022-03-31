@@ -30,11 +30,11 @@ export const detailAlatTes = async (id) => {
   }
 }
 
-export const addAlatTes = async (nama, aktif = false) => {
+export const addAlatTes = async (nama, aktif = false, sort_index = 0) => {
   try {
     const response = await axios.post(
       `${config.apiUrl}/api/alat-tes`,
-      { nama, aktif },
+      { nama, aktif, sort_index },
       {
         headers: { ...generateTokenHeader() }
       }
@@ -45,11 +45,11 @@ export const addAlatTes = async (nama, aktif = false) => {
   }
 }
 
-export const updateAlatTes = async (id, nama) => {
+export const updateAlatTes = async (id, nama, sort_index) => {
   try {
     const response = await axios.put(
       `${config.apiUrl}/api/alat-tes/${id}`,
-      { nama },
+      { nama, sort_index },
       {
         headers: { ...generateTokenHeader() }
       }

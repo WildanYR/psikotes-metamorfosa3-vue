@@ -21,7 +21,7 @@ const loadingDeleteKelompokTes = ref(false)
 const selectedKelompokTes = reactive({ id: '', nama: '' })
 const dataAlatTes = reactive({ id: '', nama: '' })
 const dataKelompokTes = ref([])
-const formAlatTes = reactive({ nama: '' })
+const formAlatTes = reactive({ nama: '', sort_index: '0' })
 const formAlatTesValidation = reactive({
   nama: { invalid: false, errorMessage: [] }
 })
@@ -60,10 +60,10 @@ const handleGetDetail = () => {
   loadingGetDetail.value = true
   detailAlatTes(route.params.id)
     .then((data) => {
-      console.log({ data })
       dataAlatTes.id = data.id
       dataAlatTes.nama = data.nama
       formAlatTes.nama = data.nama
+      formAlatTes.sort_index = data.sort_index.toString()
       dataKelompokTes.value = data.kelompok_tes
     })
     .finally(() => {
@@ -79,7 +79,7 @@ const handleUpdateAlatTes = () => {
     return
   }
   loadingUpdateAlatTes.value = true
-  updateAlatTes(dataAlatTes.id, formAlatTes.nama)
+  updateAlatTes(dataAlatTes.id, formAlatTes.nama, formAlatTes.sort_index)
     .then((data) => {
       notify({
         title: 'Berhasil',
@@ -116,11 +116,18 @@ onMounted(() => {
 
 <template>
   <widget-container title="Detail Alat Tes" :loading="loadingGetDetail">
-    <form-input
-      v-model="formAlatTes.nama"
-      label="Nama"
-      :error-message="formAlatTesValidation.nama.errorMessage"
-    />
+    <div class="space-y-4">
+      <form-input
+        v-model="formAlatTes.nama"
+        label="Nama"
+        :error-message="formAlatTesValidation.nama.errorMessage"
+      />
+      <form-input
+        v-model="formAlatTes.sort_index"
+        label="Sort Index"
+        type="number"
+      />
+    </div>
     <div class="mt-3 flex items-center justify-center gap-3">
       <psi-button variant="red" @click="$router.go(-1)">Kembali</psi-button>
       <psi-button :loading="loadingUpdateAlatTes" @click="handleUpdateAlatTes"
