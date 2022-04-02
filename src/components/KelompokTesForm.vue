@@ -41,7 +41,7 @@ const emit = defineEmits(['update:nama', 'update:waktu', 'update:petunjuk'])
       @update:model-value="(e) => emit('update:nama', e)"
     />
     <form-input
-      label="Waktu"
+      label="Waktu (detik)"
       type="number"
       :model-value="props.waktu"
       :error-message="props.errorWaktu"

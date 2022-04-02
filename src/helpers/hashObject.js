@@ -1,4 +1,4 @@
-import * as sha1 from 'js-sha1'
+import sha1 from 'js-sha1'
 
 export const hashObject = (object) => {
   const objValuesStr = Object.values(object).join('')
