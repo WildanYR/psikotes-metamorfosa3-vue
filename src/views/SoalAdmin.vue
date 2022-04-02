@@ -170,7 +170,10 @@ const handleGetSoal = () => {
       return getKelompokTesSoal(route.params.id)
     })
     .then((data) => {
-      soalData.value = data
+      soalData.value = data.map((soal) => ({
+        ...soal,
+        nomor: soal.nomor.toString()
+      }))
       deletedSoalData.value = []
       if (data.length) {
         defaultJenisSoal.value = data[0].jenis_soal
