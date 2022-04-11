@@ -28,6 +28,8 @@ const handleLogout = () => {
   loadingLogout.value = true
   logout()
     .then(() => {
+      localStorage.removeItem('token')
+      authStore.resetState()
       router.push({ name: 'login' })
     })
     .finally(() => {

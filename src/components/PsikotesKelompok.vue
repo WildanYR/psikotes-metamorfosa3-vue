@@ -12,7 +12,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue'])
 
-const metaValue = ref('-')
+const metaValue = ref('')
 
 const updateValue = (value) => {
   metaValue.value = value
@@ -22,8 +22,6 @@ const updateValue = (value) => {
 onMounted(() => {
   if (props.modelValue) {
     metaValue.value = props.modelValue
-  } else {
-    emit('update:modelValue', '-')
   }
 })
 </script>

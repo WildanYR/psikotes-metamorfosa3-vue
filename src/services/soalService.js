@@ -77,7 +77,6 @@ export const mutateSoal = async (soals) => {
     ) {
       throw { response: { data: { message: 'Tidak ada perubahan pada soal' } } }
     }
-    console.log({ insert: mutateData.insert, update: mutateData.update })
     const response = await axios.post(`${config.apiUrl}/api/soal`, mutateData, {
       headers: { ...generateTokenHeader() }
     })

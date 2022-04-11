@@ -19,33 +19,14 @@ export default [
   {
     name: 'login',
     path: '/login',
-    component: LoginForm,
-    beforeEnter: async () => {
-      const loadingStore = useLoadingStore()
-      const authStore = useAuthStore()
-      loadingStore.global = true
-      const registerStatus = await checkRegisterStatus()
-      authStore.registerStatus = registerStatus
-      loadingStore.global = false
-      return true
-    }
+    meta: { checkRegister: true },
+    component: LoginForm
   },
   {
     name: 'register',
     path: '/register',
     component: RegisterForm,
-    beforeEnter: async () => {
-      const loadingStore = useLoadingStore()
-      const authStore = useAuthStore()
-      loadingStore.global = true
-      const registerStatus = await checkRegisterStatus()
-      authStore.registerStatus = registerStatus
-      loadingStore.global = false
-      if (!registerStatus) {
-        return { name: 'login' }
-      }
-      return true
-    }
+    meta: { checkRegister: true, protectRegister: true }
   },
   {
     name: 'verify_email',

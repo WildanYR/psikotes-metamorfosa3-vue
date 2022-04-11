@@ -37,6 +37,10 @@ export const getPsikotes = async (alat_tes_id) => {
             }
           })
         }
+        if (soal.teks) {
+          response.data.apiData.kelompok_tes[i].soal[j].teks =
+            soal.teks.replace(/==cdn_url==/g, config.cdnUrl)
+        }
         response.data.apiData.kelompok_tes[i].soal[j].opsi_soal = opsi_soal
       })
     })
@@ -48,9 +52,8 @@ export const getPsikotes = async (alat_tes_id) => {
 
 export const submitJawaban = async (alat_tes_id, jawaban) => {
   const jawabanStr = jawaban
-    .map((jwb) => jwb.id + ';-;' + jwb.jawaban)
+    .map((jwb) => jwb.id + ';-;' + jwb.jawaban || '-')
     .join(';=;')
-  // persist jawaban
   try {
     const response = await axios.post(
       `${config.apiUrl}/api/psikotes/submit/${alat_tes_id}`,

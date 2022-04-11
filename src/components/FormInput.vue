@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import FormErrorMessage from './FormErrorMessage.vue'
 import FormInputLabel from './FormInputLabel.vue'
 import { EyeIcon, EyeOffIcon } from '@heroicons/vue/outline'
@@ -15,7 +15,7 @@ const props = defineProps({
   },
   modelValue: {
     type: String,
-    required: true
+    default: ''
   },
   errorMessage: {
     type: Array

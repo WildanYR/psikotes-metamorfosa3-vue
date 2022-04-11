@@ -32,7 +32,7 @@ onBeforeUnmount(() => {
     <div class="w-max rounded-xl bg-violet-100 p-2 text-violet-500">
       <clock-icon class="h-14 w-14" />
     </div>
-    <p class="mt-2 mb-1 text-gray-500">Waktu</p>
+    <p class="mt-2 mb-1 text-gray-500">Jam</p>
     <p class="text-2xl font-bold text-gray-800">{{ waktu.jam }}</p>
     <p class="font-bold text-gray-500">{{ waktu.tanggal }}</p>
   </div>

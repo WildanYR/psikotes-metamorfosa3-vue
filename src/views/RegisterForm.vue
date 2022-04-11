@@ -87,7 +87,11 @@ const handleRegister = () => {
     formData.pendidikan_terakhir
   )
     .then((data) => {
-      authStore.setUserData(data.peserta.id, data.peserta.email)
+      authStore.setUserData(
+        data.peserta.id,
+        data.peserta.email,
+        data.peserta.role
+      )
       router.push({ name: 'dashboard_peserta' })
     })
     .finally(() => {
@@ -145,6 +149,7 @@ const handleRegister = () => {
         v-model="formData.pendidikan_terakhir"
         :error-message="formDataValidate.pendidikan_terakhir.errorMessage"
         label="Pendidikan terakhir"
+        @keyup.enter="handleRegister"
       ></form-input>
     </div>
     <div class="mt-6 space-y-4">

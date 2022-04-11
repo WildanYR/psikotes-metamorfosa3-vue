@@ -22,7 +22,8 @@ export default [
     nav: {
       label: 'Sesi',
       icon: ClockIcon
-    }
+    },
+    meta: { authRoute: true, authRole: 'ADMIN' }
   },
   {
     name: 'alat_tes_admin',
@@ -31,7 +32,8 @@ export default [
     nav: {
       label: 'Alat Tes',
       icon: DocumentIcon
-    }
+    },
+    meta: { authRoute: true, authRole: 'ADMIN' }
   },
   {
     name: 'alat_tes_edit_admin',
@@ -40,14 +42,17 @@ export default [
     nav: {
       hidden: true,
       label: 'Alat Tes Edit'
-    }
+    },
+    meta: { authRoute: true, authRole: 'ADMIN' }
   },
   {
     name: 'kelompok_tes_add_admin',
     path: 'alat-tes/:alatTesId/kelompok-tes',
     component: KelompokTesAdmin,
     meta: {
-      mode: 'add'
+      mode: 'add',
+      authRoute: true,
+      authRole: 'ADMIN'
     },
     nav: {
       hidden: true,
@@ -59,7 +64,9 @@ export default [
     path: 'alat-tes/:alatTesId/kelompok-tes/:id',
     component: KelompokTesAdmin,
     meta: {
-      mode: 'edit'
+      mode: 'edit',
+      authRoute: true,
+      authRole: 'ADMIN'
     },
     nav: {
       hidden: true,
@@ -73,7 +80,8 @@ export default [
     nav: {
       hidden: true,
       label: 'Edit Soal'
-    }
+    },
+    meta: { authRoute: true, authRole: 'ADMIN' }
   },
   {
     name: 'hasil_psikotes_admin',
@@ -82,7 +90,8 @@ export default [
     nav: {
       label: 'Hasil Psikotes',
       icon: CheckCircleIcon
-    }
+    },
+    meta: { authRoute: true, authRole: 'ADMIN' }
   },
   {
     name: 'user_manager_admin',
@@ -91,7 +100,8 @@ export default [
     nav: {
       label: 'User Manager',
       icon: UserIcon
-    }
+    },
+    meta: { authRoute: true, authRole: 'ADMIN' }
   },
   {
     name: 'setting_admin',
@@ -100,6 +110,7 @@ export default [
     nav: {
       label: 'Setting',
       icon: CogIcon
-    }
+    },
+    meta: { authRoute: true, authRole: 'ADMIN' }
   }
 ]

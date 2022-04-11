@@ -27,20 +27,35 @@ onMounted(() => {
     <button
       :class="[
         'w-full rounded-lg p-3',
-        metaValue === 'v' ? 'bg-blue-500 font-bold text-white' : 'bg-gray-200'
+        metaValue === 'Setuju'
+          ? 'bg-blue-500 font-bold text-white'
+          : 'bg-gray-200'
       ]"
-      @click="updateValue('Ya')"
+      @click="updateValue('Setuju')"
     >
       Setuju
     </button>
     <button
       :class="[
         'w-full rounded-lg p-3',
-        metaValue === 'x' ? 'bg-blue-500 font-bold text-white' : 'bg-gray-200'
+        metaValue === 'Tidak setuju'
+          ? 'bg-blue-500 font-bold text-white'
+          : 'bg-gray-200'
       ]"
-      @click="updateValue('Tidak')"
+      @click="updateValue('Tidak setuju')"
     >
       Tidak setuju
+    </button>
+    <button
+      :class="[
+        'w-full rounded-lg p-3',
+        metaValue === 'Ragu-ragu'
+          ? 'bg-blue-500 font-bold text-white'
+          : 'bg-gray-200'
+      ]"
+      @click="updateValue('Ragu-ragu')"
+    >
+      Ragu-ragu
     </button>
   </div>
 </template>

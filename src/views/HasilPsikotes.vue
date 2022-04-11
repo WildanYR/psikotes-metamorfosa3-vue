@@ -10,6 +10,7 @@ import {
   getJawabanUserPsikotes
 } from '../services/psikotesService'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
+import { notify } from '@kyvg/vue3-notification'
 
 const dataAlatTes = ref([])
 const dataSesi = ref([])
@@ -71,6 +72,28 @@ const handleGetJawaban = () => {
     })
 }
 
+const handleCopyToClipboard = (index) => {
+  const soal = dataJawaban.value[index].soal
+  const soalStr = soal.map((s) => s.jawaban).join('\r\n')
+  navigator.clipboard
+    .writeText(soalStr)
+    .then(() => {
+      notify({
+        title: 'Berhasil',
+        text: 'Copy jawaban berhasil',
+        type: 'success'
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+      notify({
+        title: 'Gagal',
+        text: 'Copy jawaban gagal',
+        type: 'error'
+      })
+    })
+}
+
 onMounted(() => {
   handleGetAlatTesSesi()
 })
@@ -126,7 +149,7 @@ onMounted(() => {
       :title="kelompokTes.nama"
     >
       <template #cta>
-        <psi-button>Copy Jawaban</psi-button>
+        <psi-button @click="handleCopyToClipboard(i)">Copy Jawaban</psi-button>
       </template>
       <table class="w-full table-auto border-collapse">
         <thead>

@@ -146,11 +146,7 @@ onMounted(() => {
         label="Nama"
         :error-message="formAddValidation.nama.errorMessage"
       />
-      <form-input
-        v-model="formAdd.sort_index"
-        label="Sort Index"
-        type="number"
-      />
+      <form-input v-model="formAdd.sort_index" label="Urutan" type="number" />
     </div>
     <div class="mt-3 flex items-center justify-end gap-3">
       <psi-button variant="black" @click="closeAddModal">Batal</psi-button>

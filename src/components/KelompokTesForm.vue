@@ -29,7 +29,12 @@ const props = defineProps({
     type: Array
   }
 })
-const emit = defineEmits(['update:nama', 'update:waktu', 'update:petunjuk'])
+const emit = defineEmits([
+  'update:nama',
+  'update:waktu',
+  'update:petunjuk',
+  'update:sortIndex'
+])
 </script>
 
 <template>
@@ -48,7 +53,7 @@ const emit = defineEmits(['update:nama', 'update:waktu', 'update:petunjuk'])
       @update:model-value="(e) => emit('update:waktu', e)"
     />
     <form-input
-      label="Sort Index"
+      label="Urutan"
       type="number"
       :model-value="props.sortIndex"
       @update:model-value="(e) => emit('update:sortIndex', e)"

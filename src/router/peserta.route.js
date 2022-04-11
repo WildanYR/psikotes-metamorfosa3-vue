@@ -10,6 +10,7 @@ export default [
     nav: {
       label: 'Dashboard',
       icon: HomeIcon
-    }
+    },
+    meta: { authRoute: true, authRole: 'USER' }
   }
 ]

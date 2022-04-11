@@ -124,7 +124,7 @@ onMounted(() => {
       />
       <form-input
         v-model="formAlatTes.sort_index"
-        label="Sort Index"
+        label="Urutan"
         type="number"
       />
     </div>

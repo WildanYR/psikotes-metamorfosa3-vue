@@ -40,7 +40,7 @@ const lastKelompokTes = computed(
     psikotesStore.alat_tes.kelompok_tes.length - 1
 )
 const progresMengerjakan = computed(() => {
-  let soalDikerjakan =
+  const soalDikerjakan =
     psikotesStore.jawaban.filter((jwb) => !!jwb.jawaban).length -
     psikotesStore.jumlah_terjawab
   return {
@@ -60,7 +60,6 @@ const getJawaban = (id) => {
 }
 const handleJawab = (id, jawaban) => {
   if (!psikotesStore.lock) {
-    console.log({ jawaban })
     const jawabanIndex = psikotesStore.jawaban.findIndex((jwb) => jwb.id === id)
     if (jawabanIndex < 0) {
       psikotesStore.jawaban.push({ id, jawaban })
@@ -78,8 +77,8 @@ const handleSelesai = () => {
     submitJawaban(alatTesData.value.id, psikotesStore.jawaban)
       .then(() => {
         if (psikotesStore.timer) clearInterval(psikotesStore.timer)
-        psikotesStore.resetState()
         router.push({ name: 'dashboard_peserta' })
+        psikotesStore.resetState()
         notify({
           title: 'Selesai',
           text: 'Selamat anda telah menyelesaikan psikotes',
@@ -109,7 +108,6 @@ onMounted(() => {
       const dateNow = Date.now()
       const timer_end =
         psikotesStore.timer_start + kelompokTesData.value.waktu * 1000
-      console.log('timer countdown = ', (timer_end - dateNow) / 1000)
       if (dateNow >= timer_end) {
         clearInterval(psikotesStore.timer)
         psikotesStore.timer_start = 0

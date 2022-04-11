@@ -4,13 +4,20 @@ export const useAuthStore = defineStore('auth', {
     registerStatus: true,
     userData: {
       id: '',
-      email: ''
+      email: '',
+      role: ''
     }
   }),
   actions: {
-    setUserData(id, email) {
+    resetState() {
+      this.userData.id = ''
+      this.userData.email = ''
+      this.userData.role = ''
+    },
+    setUserData(id, email, role) {
       this.userData.id = id
       this.userData.email = email
+      this.userData.role = role
     }
   },
   persist: true
