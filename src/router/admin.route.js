@@ -5,14 +5,13 @@ import {
   ClockIcon,
   CheckCircleIcon
 } from '@heroicons/vue/outline'
-
-import AlatTesAdmin from '../views/AlatTesAdmin.vue'
-import AlatTesEditAdmin from '../views/AlatTesEditAdmin.vue'
-import KelompokTesAdmin from '../views/KelompokTesAdmin.vue'
-import SoalAdmin from '../views/SoalAdmin.vue'
-import SesiAdmin from '../views/SesiAdmin.vue'
-import UnderDevelopment from '../views/UnderDevelopment.vue'
-import HasilPsikotes from '../views/HasilPsikotes.vue'
+const AlatTesAdmin = () => import('../views/AlatTesAdmin.vue')
+const AlatTesEditAdmin = () => import('../views/AlatTesEditAdmin.vue')
+const KelompokTesAdmin = () => import('../views/KelompokTesAdmin.vue')
+const SoalAdmin = () => import('../views/SoalAdmin.vue')
+const SesiAdmin = () => import('../views/SesiAdmin.vue')
+const UnderDevelopment = () => import('../views/UnderDevelopment.vue')
+const HasilPsikotes = () => import('../views/HasilPsikotes.vue')
 
 export default [
   {

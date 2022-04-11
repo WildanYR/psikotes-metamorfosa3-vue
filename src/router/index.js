@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AuthLayout from '../layouts/AuthLayout.vue'
-import SidebarLayout from '../layouts/SidebarLayout.vue'
-import PsikotesLayout from '../layouts/PsikotesLayout.vue'
+const AuthLayout = () => import('../layouts/AuthLayout.vue')
+const SidebarLayout = () => import('../layouts/SidebarLayout.vue')
+const PsikotesLayout = () => import('../layouts/PsikotesLayout.vue')
 import authRoute from './auth.route'
 import pesertaRoute from './peserta.route'
 import adminRoute from './admin.route'

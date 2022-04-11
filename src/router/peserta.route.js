@@ -1,6 +1,6 @@
 import { HomeIcon } from '@heroicons/vue/outline'
 
-import DashboardPeserta from '../views/DashboardPeserta.vue'
+const DashboardPeserta = () => import('../views/DashboardPeserta.vue')
 
 export default [
   {

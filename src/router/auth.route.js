@@ -1,19 +1,7 @@
-import LoginForm from '../views/LoginForm.vue'
-import RegisterForm from '../views/RegisterForm.vue'
-import VerifyEmail from '../views/VerifyEmail.vue'
-import ConfirmEmail from '../views/ConfirmEmail.vue'
-import { registerStatus } from '../services/authService'
-import { useAuthStore } from '../stores/auth'
-import { useLoadingStore } from '../stores/loading'
-
-const checkRegisterStatus = async () => {
-  try {
-    const status = await registerStatus()
-    return status.registerStatus
-  } catch (error) {
-    return false
-  }
-}
+const LoginForm = () => import('../views/LoginForm.vue')
+const RegisterForm = () => import('../views/RegisterForm.vue')
+const VerifyEmail = () => import('../views/VerifyEmail.vue')
+const ConfirmEmail = () => import('../views/ConfirmEmail.vue')
 
 export default [
   {

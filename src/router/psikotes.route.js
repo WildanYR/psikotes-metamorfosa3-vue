@@ -1,5 +1,5 @@
-import PsikotesPetunjuk from '../views/PsikotesPetunjuk.vue'
-import PsikotesSoal from '../views/PsikotesSoal.vue'
+const PsikotesPetunjuk = () => import('../views/PsikotesPetunjuk.vue')
+const PsikotesSoal = () => import('../views/PsikotesSoal.vue')
 
 export default [
   {
