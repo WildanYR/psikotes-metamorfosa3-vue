@@ -38,6 +38,7 @@ const appVersion = __APP_VERSION
     <div class="flex h-full w-64 flex-col border-r border-gray-300 bg-white">
       <div class="flex-shrink-0 px-4 py-2">
         <img
+          loading="lazy"
           src="../assets/logo.png"
           alt="logo ppt metamorfosa"
           class="pointer-events-none mx-auto w-1/2"

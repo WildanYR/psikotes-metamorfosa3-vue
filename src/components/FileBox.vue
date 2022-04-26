@@ -39,7 +39,12 @@ const handleDelete = () => {
       props.type === 'file' ? 'bg-blue-50' : 'bg-gray-50'
     ]"
   >
-    <img v-if="props.type === 'file'" :src="props.img" class="w-36" />
+    <img
+      v-if="props.type === 'file'"
+      loading="lazy"
+      :src="props.img"
+      class="w-36"
+    />
     <folder-icon v-else class="h-28 w-28 text-gray-400" />
     <p v-show="props.type === 'file'" class="mb-5 mt-2">{{ props.label }}</p>
     <psi-button class="w-full" variant="black" @click="handleSelected()">{{

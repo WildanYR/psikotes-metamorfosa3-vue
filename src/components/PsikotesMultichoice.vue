@@ -72,7 +72,12 @@ onMounted(() => {
         <div class="flex items-center">
           <div class="text-sm">
             <p v-if="ops.type === 'text'">{{ ops.teks }}</p>
-            <img v-else :src="config.cdnUrl + ops.teks" class="w-44" />
+            <img
+              v-else
+              loading="lazy"
+              :src="config.cdnUrl + ops.teks"
+              class="w-44"
+            />
           </div>
         </div>
         <div v-show="metaValue.includes(ops.value)" class="text-blue-700">

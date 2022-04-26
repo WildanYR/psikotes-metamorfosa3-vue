@@ -62,7 +62,12 @@ const emit = defineEmits(['update:modelValue'])
                 <div class="text-sm">
                   <RadioGroupLabel as="template">
                     <p v-if="ops.type === 'text'">{{ ops.teks }}</p>
-                    <img v-else :src="config.cdnUrl + ops.teks" class="w-44" />
+                    <img
+                      v-else
+                      loading="lazy"
+                      :src="config.cdnUrl + ops.teks"
+                      class="w-44"
+                    />
                   </RadioGroupLabel>
                 </div>
               </div>

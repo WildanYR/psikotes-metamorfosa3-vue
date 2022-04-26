@@ -38,6 +38,7 @@ const showModal = ref(false)
       </p>
     </div>
     <img
+      loading="lazy"
       src="../assets/logo.png"
       alt="logo ppt metamorfosa"
       class="pointer-events-none h-6 md:hidden"

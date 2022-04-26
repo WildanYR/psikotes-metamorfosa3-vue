@@ -289,6 +289,7 @@ onMounted(() => {
                 </div>
                 <img
                   v-else-if="opsi.type === 'image'"
+                  loading="lazy"
                   :src="generateImageUrl(opsi.teks)"
                   class="w-24"
                 />
