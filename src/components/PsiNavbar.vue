@@ -79,7 +79,11 @@ const showModal = ref(false)
         <user-icon-solid class="h-7 w-7" />
       </div>
       <p class="font-medium">pesertatesting@gmail.com</p>
-      <psi-button variant="red-outline">
+      <psi-button
+        variant="red-outline"
+        :loading="props.logoutLoading"
+        @click="emit('onLogout')"
+      >
         keluar
         <logout-icon class="inline h-5 w-5" />
       </psi-button>
