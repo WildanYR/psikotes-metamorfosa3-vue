@@ -5,7 +5,7 @@ const DashboardPeserta = () => import('../views/DashboardPeserta.vue')
 export default [
   {
     name: 'dashboard_peserta',
-    path: '/',
+    path: '',
     component: DashboardPeserta,
     nav: {
       label: 'Dashboard',

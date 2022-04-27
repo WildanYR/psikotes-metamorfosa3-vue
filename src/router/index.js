@@ -65,19 +65,26 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to, from) => {
+router.beforeEach((to, from) => {
   const loadingStore = useLoadingStore()
   const authStore = useAuthStore()
   const psikotesStore = usePsikotesStore()
   const isTokenExist = !!localStorage.getItem('token')
   if (to.meta.checkRegister) {
     loadingStore.global = true
-    const registerStatus = await checkRegisterStatus()
-    authStore.registerStatus = registerStatus
-    loadingStore.global = false
-    if (to.meta.protectRegister && !registerStatus) {
-      return { name: 'login' }
-    }
+    checkRegisterStatus()
+      .then((registerStatus) => {
+        authStore.registerStatus = registerStatus
+        if (to.meta.protectRegister && !registerStatus) {
+          return { name: 'login' }
+        }
+      })
+      .catch(() => {
+        return { name: 'login' }
+      })
+      .finally(() => {
+        loadingStore.global = false
+      })
   }
   if (!to.meta.authRoute && isTokenExist) {
     if (authStore.userData.role === 'admin') {

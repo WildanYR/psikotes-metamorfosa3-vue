@@ -31,11 +31,9 @@ const handleLogin = () => {
   loadingLogin.value = true
   login(formData.email, formData.password)
     .then((data) => {
-      authStore.setUserData(
-        data.peserta.id,
-        data.peserta.email,
-        data.peserta.role
-      )
+      authStore.userData.id = data.peserta.id
+      authStore.userData.email = data.peserta.email
+      authStore.userData.role = data.peserta.role
       if (data.peserta.role === 'admin') {
         router.push({ name: 'sesi_admin' })
       } else {

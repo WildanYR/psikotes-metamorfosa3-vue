@@ -87,11 +87,9 @@ const handleRegister = () => {
     formData.pendidikan_terakhir
   )
     .then((data) => {
-      authStore.setUserData(
-        data.peserta.id,
-        data.peserta.email,
-        data.peserta.role
-      )
+      authStore.userData.id = data.peserta.id
+      authStore.userData.email = data.peserta.email
+      authStore.userData.role = data.peserta.role
       router.push({ name: 'dashboard_peserta' })
     })
     .finally(() => {
