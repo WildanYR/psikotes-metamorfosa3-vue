@@ -96,6 +96,13 @@ router.beforeEach((to, from) => {
   if (to.meta.authRoute && !isTokenExist) {
     return { name: 'login' }
   }
+  if (
+    (to.meta.authRole === 'ADMIN' || to.meta.authRole === 'USER') &&
+    !authStore.userData.role
+  ) {
+    localStorage.removeItem('token')
+    return { name: 'login' }
+  }
   if (to.meta.authRole === 'ADMIN' && authStore.userData.role !== 'admin') {
     return { name: 'dashboard_peserta' }
   }
