@@ -52,8 +52,8 @@ export const getPsikotes = async (alat_tes_id) => {
 
 export const submitJawaban = async (alat_tes_id, jawaban) => {
   const jawabanStr = jawaban
-    .map((jwb) => jwb.id + ';-;' + jwb.jawaban || '-')
-    .join(';=;')
+    ? jawaban.map((jwb) => jwb.id + ';-;' + jwb.jawaban || '-').join(';=;')
+    : ''
   try {
     const response = await axios.post(
       `${config.apiUrl}/api/psikotes/submit/${alat_tes_id}`,
@@ -91,12 +91,13 @@ export const getJawabanUserPsikotes = async (sesi_id, alat_tes_id, user_id) => {
       }
     )
     const kelompokTesData = response.data.apiData.kelompok_tes
-    const jawabanUser = response.data.apiData.jawaban
-      .split(';=;')
-      .map((jwb) => {
+    let jawabanUser = ''
+    if (response.data.apiData.jawaban) {
+      jawabanUser = response.data.apiData.jawaban.split(';=;').map((jwb) => {
         const [id, jawaban] = jwb.split(';-;')
         return { id, jawaban }
       })
+    }
     let kelompokTes = []
     for (const keltes of kelompokTesData) {
       const jenis_soal_kelompok = keltes.soal[0].jenis_soal === 'kelompok'
@@ -109,9 +110,11 @@ export const getJawabanUserPsikotes = async (sesi_id, alat_tes_id, user_id) => {
         let jenisSoalKelompok = []
         for (const soal of keltes.soal) {
           let jawabanKelompok = '-'
-          for (const jawaban of jawabanUser) {
-            if (soal.id === jawaban.id) {
-              jawabanKelompok = jawaban.jawaban
+          if (jawabanUser) {
+            for (const jawaban of jawabanUser) {
+              if (soal.id === jawaban.id) {
+                jawabanKelompok = jawaban.jawaban
+              }
             }
           }
           const kelompokIndex = jenisSoalKelompok.findIndex(
