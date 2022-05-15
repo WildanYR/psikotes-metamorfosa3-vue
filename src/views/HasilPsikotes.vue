@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import WidgetContainer from '../components/WidgetContainer.vue'
 import PsiAutocomplete from '../components/PsiAutocomplete.vue'
 import PsiButton from '../components/PsiButton.vue'
@@ -22,6 +22,12 @@ const loadingGetJawaban = ref(false)
 const selectedSesi = ref(null)
 const selectedAlatTes = ref(null)
 const selectedUser = ref(null)
+const detailSelectedUser = computed(() => {
+  if (!selectedUser.value) return null
+  return Object.entries(selectedUser.value.detail)
+    .map((dt) => ({ key: dt[0].replace(/_/g, ' '), value: dt[1] }))
+    .filter((dt) => dt.key !== 'id')
+})
 
 const handleGetAlatTesSesi = () => {
   loadingGetAlatTesSesi.value = true
@@ -48,7 +54,8 @@ const handleGetUser = () => {
       .then((data) => {
         dataUser.value = data.map((item) => ({
           text: item.nama_lengkap,
-          value: item.id
+          value: item.id,
+          detail: { ...item }
         }))
       })
       .finally(() => {
@@ -58,6 +65,7 @@ const handleGetUser = () => {
 }
 
 const handleGetJawaban = () => {
+  console.log({ selectedUser: selectedUser.value.detail })
   loadingGetJawaban.value = true
   getJawabanUserPsikotes(
     selectedSesi.value.value,
@@ -135,6 +143,31 @@ onMounted(() => {
       class="mt-5 w-full"
       @update:model-value="handleGetJawaban()"
     />
+  </widget-container>
+  <widget-container v-if="detailSelectedUser" title="Data Peserta">
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr
+          class="rounded-lg text-left text-sm font-medium text-gray-700"
+          style="font-size: 0.9674rem"
+        >
+          <th class="bg-gray-200 px-4 py-2" style="background-color: #f8f8f8">
+            Detail
+          </th>
+          <th class="px-4 py-2" style="background-color: #f8f8f8">Data</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm font-normal text-gray-700">
+        <tr
+          v-for="detail in detailSelectedUser"
+          :key="detail.key"
+          class="border-b border-gray-200 py-10 hover:bg-gray-100"
+        >
+          <td class="px-4 py-4">{{ detail.key }}</td>
+          <td class="px-4 py-4">{{ detail.value }}</td>
+        </tr>
+      </tbody>
+    </table>
   </widget-container>
   <div v-if="loadingGetJawaban" class="flex items-center justify-center">
     <loading-spinner
