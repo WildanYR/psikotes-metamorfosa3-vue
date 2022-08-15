@@ -49,7 +49,10 @@ const handleGetSesi = () => {
       return getAlatTes()
     })
     .then((data) => {
-      alatTesData.value = data
+      alatTesData.value = data.map((item) => ({
+        ...item,
+        aktif: item.aktif === '1'
+      }))
     })
     .finally(() => {
       loadingGet.value = false
