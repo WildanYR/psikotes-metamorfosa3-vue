@@ -11,10 +11,12 @@ import PsikotesKelompok from '../components/PsikotesKelompok.vue'
 import { useRouter } from 'vue-router'
 import { usePsikotesStore } from '../stores/psikotes'
 import { notify } from '@kyvg/vue3-notification'
-import { submitJawaban } from '../services/psikotesService'
+import { saveLocalJawaban, submitJawaban } from '../services/psikotesService'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 const psikotesStore = usePsikotesStore()
+const authStore = useAuthStore()
 
 const loadingSubmit = ref(false)
 const alatTesData = computed(() => ({
@@ -74,6 +76,12 @@ const handleSelesai = () => {
     // submit psikotes
     loadingSubmit.value = true
     psikotesStore.lock = true
+    saveLocalJawaban(
+      authStore.userData.id,
+      alatTesData.value.id,
+      alatTesData.value.nama,
+      psikotesStore.jawaban
+    )
     submitJawaban(alatTesData.value.id, psikotesStore.jawaban)
       .then(() => {
         if (psikotesStore.timer) clearInterval(psikotesStore.timer)

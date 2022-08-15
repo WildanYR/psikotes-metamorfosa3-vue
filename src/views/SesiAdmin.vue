@@ -42,7 +42,10 @@ const handleGetSesi = () => {
   loadingGet.value = true
   getSesi()
     .then((data) => {
-      sesiData.value = data
+      sesiData.value = data.map((item) => ({
+        ...item,
+        aktif: item.aktif === '1'
+      }))
       return getAlatTes()
     })
     .then((data) => {

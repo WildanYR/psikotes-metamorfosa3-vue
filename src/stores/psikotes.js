@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const usePsikotesStore = defineStore('psikotes', {
   state: () => ({
-    alat_tes: [],
+    alat_tes: null,
     kelompok_tes_index: 0,
     lock: false,
     timer: null,
@@ -13,7 +13,7 @@ export const usePsikotesStore = defineStore('psikotes', {
   }),
   actions: {
     resetState() {
-      this.alat_tes = []
+      this.alat_tes = null
       this.kelompok_tes_index = 0
       this.lock = false
       this.timer = null

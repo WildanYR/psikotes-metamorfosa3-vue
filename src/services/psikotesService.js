@@ -146,3 +146,23 @@ export const getJawabanUserPsikotes = async (sesi_id, alat_tes_id, user_id) => {
     throw errorHandler(error)
   }
 }
+
+export const saveLocalJawaban = (
+  user_id,
+  alat_tes_id,
+  alat_tes_nama,
+  jawaban
+) => {
+  const key = `${user_id.replace(/-/g, '')}_${alat_tes_id.replace(/-/g, '')}`
+  const data = {
+    user_id,
+    alat_tes_id,
+    alat_tes_nama,
+    jawaban
+  }
+  localStorage.setItem(key, JSON.stringify(data))
+}
+
+export const getLocalJawaban = (key) => {
+  return JSON.parse(localStorage.getItem(key))
+}

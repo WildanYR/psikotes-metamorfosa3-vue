@@ -91,25 +91,25 @@ export default [
       icon: CheckCircleIcon
     },
     meta: { authRoute: true, authRole: 'ADMIN' }
-  },
-  {
-    name: 'user_manager_admin',
-    path: 'user',
-    component: UnderDevelopment,
-    nav: {
-      label: 'User Manager',
-      icon: UserIcon
-    },
-    meta: { authRoute: true, authRole: 'ADMIN' }
-  },
-  {
-    name: 'setting_admin',
-    path: 'setting',
-    component: UnderDevelopment,
-    nav: {
-      label: 'Setting',
-      icon: CogIcon
-    },
-    meta: { authRoute: true, authRole: 'ADMIN' }
   }
+  // {
+  //   name: 'user_manager_admin',
+  //   path: 'user',
+  //   component: UnderDevelopment,
+  //   nav: {
+  //     label: 'User Manager',
+  //     icon: UserIcon
+  //   },
+  //   meta: { authRoute: true, authRole: 'ADMIN' }
+  // },
+  // {
+  //   name: 'setting_admin',
+  //   path: 'setting',
+  //   component: UnderDevelopment,
+  //   nav: {
+  //     label: 'Setting',
+  //     icon: CogIcon
+  //   },
+  //   meta: { authRoute: true, authRole: 'ADMIN' }
+  // }
 ]
