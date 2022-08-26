@@ -179,7 +179,10 @@ const closeImageModal = () => {
   showImageModal.value = false
 }
 const handleImageSelected = (image) => {
-  editor.value.chain().setImage({ src: image }).run()
+  editor.value
+    .chain()
+    .setImage({ src: `==cdn_url==${image}` })
+    .run()
   closeImageModal()
 }
 watch(editorValue, () => {
