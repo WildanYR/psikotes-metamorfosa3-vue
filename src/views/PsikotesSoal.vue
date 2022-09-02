@@ -106,7 +106,7 @@ const handleSelesai = () => {
 }
 
 onMounted(() => {
-  if (!psikotesStore.lock && kelompokTesData.value.waktu) {
+  if (!psikotesStore.lock && kelompokTesData.value.waktu > 0) {
     if (psikotesStore.timer) {
       clearInterval(psikotesStore.timer)
     } else {
